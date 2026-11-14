@@ -1,0 +1,39 @@
+.tela {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+h1 {
+  margin: 0;
+}
+
+.subtitulo {
+  margin: 0 0 24px;
+  color: #444;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.entrar {
+  min-height: 56px;
+  font-size: 18px;
+}
+
+.erro {
+  margin: 0;
+  color: #b3261e;
+}
+
+.aviso {
+  margin: 16px 0 0;
+  color: #444;
+  font-size: 14px;
+}

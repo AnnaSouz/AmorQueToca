@@ -1,0 +1,35 @@
+
+<main class="tela">
+  <h1>Amor que Toca</h1>
+  <p class="subtitulo">Chamada e instrumentos da turma</p>
+
+  <form (ngSubmit)="entrar()">
+    <mat-form-field appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input matInput type="email" name="email" [(ngModel)]="email" autocomplete="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input
+        matInput
+        [type]="mostrarSenha() ? 'text' : 'password'"
+        name="senha"
+        [(ngModel)]="senha"
+        autocomplete="current-password"
+      />
+      <button matSuffix mat-button type="button" (click)="alternarSenha()">
+        {{ mostrarSenha() ? 'Ocultar' : 'Mostrar' }}
+      </button>
+    </mat-form-field>
+
+    @if (erro()) {
+      <p class="erro" role="alert">{{ erro() }}</p>
+    }
+
+    <button mat-flat-button type="submit" class="entrar">Entrar</button>
+  </form>
+
+  <button mat-button type="button" class="esqueci">Esqueci minha senha</button>
+  <p class="aviso">Acesso só para a equipe do projeto.</p>
+</main>
