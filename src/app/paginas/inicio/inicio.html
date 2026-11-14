@@ -1,0 +1,27 @@
+<main class="tela">
+  <header class="topo">
+    <div class="avatar" aria-hidden="true">{{ professor[0] }}</div>
+    <h1>Olá, {{ professor }}</h1>
+    <button mat-button type="button" (click)="sair()">Sair</button>
+  </header>
+
+  <mat-card appearance="outlined" class="turma">
+    <mat-card-header>
+      <mat-card-title>Turma de hoje</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="turma-nome">{{ turma.nome }}</p>
+      <p>{{ turma.horario }} · {{ turma.alunos }} alunos</p>
+    </mat-card-content>
+  </mat-card>
+  <button mat-flat-button type="button" class="principal">Fazer chamada</button>
+
+  <button mat-stroked-button type="button" class="atalho">
+    Quem está faltando
+    <span class="indicador">{{ alunosEmRisco }} alunos em risco</span>
+  </button>
+  <button mat-stroked-button type="button" class="atalho">
+    Instrumentos
+    <span class="indicador">{{ instrumentosEmprestados }} de {{ instrumentosTotal }} emprestado</span>
+  </button>
+</main>

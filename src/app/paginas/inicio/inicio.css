@@ -1,0 +1,55 @@
+.tela {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topo h1 {
+  flex: 1;
+  margin: 0;
+  font-size: 22px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #005fb8;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.turma-nome {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+
+.principal {
+  min-height: 64px;
+  font-size: 20px;
+}
+
+.atalho {
+  min-height: 56px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.indicador {
+  margin-left: 12px;
+  color: #444;
+  font-size: 14px;
+}

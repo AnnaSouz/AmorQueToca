@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +14,7 @@ import { Autenticacao } from '../../servicos/autenticacao';
 })
 export class Login {
   private autenticacao = inject(Autenticacao);
+  private roteador = inject(Router);
 
   email = '';
   senha = '';
@@ -35,7 +37,7 @@ export class Login {
     this.carregando.set(true);
     try {
       await this.autenticacao.entrar(this.email.trim(), this.senha);
-      this.sucesso.set(true);
+      this.roteador.navigate(['/inicio']);
     } catch {
       this.erro.set('E-mail ou senha incorretos. Confira ou use Esqueci minha senha.');
     } finally {
