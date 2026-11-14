@@ -41,6 +41,10 @@
     <p class="mensagem" role="status">{{ mensagem() }}</p>
   }
 
+  @if (erro()) {
+    <p class="erro" role="alert">{{ erro() }}</p>
+  }
+
   <div class="rodape">
     <button mat-flat-button type="button" class="salvar" (click)="salvar()">Salvar chamada</button>
   </div>

@@ -2,9 +2,9 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, isDevMode } from
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { initializeFirestore, persistentLocalCache, provideFirestore } from '@angular/fire/firestore';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +26,8 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() =>
+      initializeFirestore(getApp(), { localCache: persistentLocalCache() }),
+    ),
   ],
 };

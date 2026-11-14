@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Aluno } from '../../modelos/aluno';
+import { RegistroChamada } from '../../servicos/registro-chamada';
 
 @Component({
   selector: 'app-chamada',
@@ -11,8 +12,10 @@ import { Aluno } from '../../modelos/aluno';
 })
 export class Chamada {
   private roteador = inject(Router);
+  private registroChamada = inject(RegistroChamada);
 
-  // Dados de exemplo (fictícios). Depois virão do Firestore.
+  
+  turmaId = 'turma-violao-iniciante';
   turma = { nome: 'Violão Iniciante', horario: 'Sábado, 9h' };
   alunos: Aluno[] = [
     { id: 'a1', nome: 'Ana Ribeiro' },
@@ -27,9 +30,9 @@ export class Chamada {
     { id: 'a10', nome: 'Sofia Ramos' },
   ];
 
-  // Guarda os ids de quem faltou. Todo mundo começa como presente.
   faltas = signal<Set<string>>(new Set());
   mensagem = signal('');
+  erro = signal('');
 
   totalFaltas = computed(() => this.faltas().size);
   totalPresentes = computed(() => this.alunos.length - this.faltas().size);
@@ -49,10 +52,26 @@ export class Chamada {
       return novo;
     });
     this.mensagem.set('');
+    this.erro.set('');
   }
 
-  salvar() {
-    this.mensagem.set('Chamada salva neste teste. A gravação no Firebase vem no próximo passo.');
+  async salvar() {
+    this.mensagem.set('');
+    this.erro.set('');
+    const gravacao = this.registroChamada.salvar(this.turmaId, this.alunos, this.faltas());
+
+    if (navigator.onLine) {
+      try {
+        await gravacao;
+        this.mensagem.set('Chamada salva.');
+      } catch {
+        this.erro.set('Não foi possível salvar a chamada. Tente de novo.');
+      }
+    } else {
+     
+      gravacao.catch(() => this.erro.set('Não foi possível salvar a chamada. Tente de novo.'));
+      this.mensagem.set('Chamada salva. Será enviada quando houver internet.');
+    }
   }
 
   voltar() {
