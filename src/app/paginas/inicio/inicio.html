@@ -14,12 +14,14 @@
       <p>{{ turma.horario }} · {{ turma.alunos }} alunos</p>
     </mat-card-content>
   </mat-card>
-  <button mat-flat-button type="button" class="principal">Fazer chamada</button>
+
+  <button mat-flat-button type="button" class="principal" (click)="fazerChamada()">Fazer chamada</button>
 
   <button mat-stroked-button type="button" class="atalho">
     Quem está faltando
     <span class="indicador">{{ alunosEmRisco }} alunos em risco</span>
   </button>
+
   <button mat-stroked-button type="button" class="atalho">
     Instrumentos
     <span class="indicador">{{ instrumentosEmprestados }} de {{ instrumentosTotal }} emprestado</span>

@@ -1,0 +1,47 @@
+<main class="tela">
+  <header class="topo">
+    <button mat-button type="button" (click)="voltar()">Voltar</button>
+    <div>
+      <h1>Chamada</h1>
+      <p class="subtitulo">{{ turma.nome }} · {{ turma.horario }}</p>
+    </div>
+  </header>
+
+  <section class="contadores" aria-live="polite">
+    <div class="contador presentes">
+      <span class="numero">{{ totalPresentes() }}</span>
+      Presentes
+    </div>
+    <div class="contador faltas">
+      <span class="numero">{{ totalFaltas() }}</span>
+      Faltas
+    </div>
+  </section>
+
+  <p class="instrucao">Toque em quem faltou</p>
+
+  <ul class="lista">
+    @for (aluno of alunos; track aluno.id) {
+      <li>
+        <button
+          type="button"
+          class="aluno"
+          [class.falta]="estaFaltando(aluno.id)"
+          [attr.aria-pressed]="estaFaltando(aluno.id)"
+          (click)="alternar(aluno.id)"
+        >
+          <span class="nome">{{ aluno.nome }}</span>
+          <span class="estado">{{ estaFaltando(aluno.id) ? '✗ Falta' : '✓ Presente' }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+
+  @if (mensagem()) {
+    <p class="mensagem" role="status">{{ mensagem() }}</p>
+  }
+
+  <div class="rodape">
+    <button mat-flat-button type="button" class="salvar" (click)="salvar()">Salvar chamada</button>
+  </div>
+</main>

@@ -14,12 +14,15 @@ export class Inicio {
   private autenticacao = inject(Autenticacao);
   private roteador = inject(Router);
 
-  // Dados de exemplo (fictícios). Depois serão trocados por dados do Firestore.
   professor = 'Paulo';
   turma = { nome: 'Violão Iniciante', horario: 'Sábado, 9h', alunos: 10 };
   alunosEmRisco = 2;
   instrumentosEmprestados = 1;
   instrumentosTotal = 4;
+
+  fazerChamada() {
+    this.roteador.navigate(['/chamada']);
+  }
 
   async sair() {
     await this.autenticacao.sair();
