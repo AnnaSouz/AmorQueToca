@@ -10,14 +10,11 @@ Hoje as matrículas, a frequência e o empréstimo de instrumentos não são reg
 
 ## Funcionalidades
 
-- [x] Login da equipe com Firebase Authentication, com mensagem de erro genérica
-- [x] Tela inicial com a turma do dia e atalhos (protegida por login)
-- [x] Chamada com toque para marcar faltas e contadores de presentes e faltas
-- [x] Gravação da chamada no Firestore, com suporte offline e sem duplicar registros do mesmo dia
-- [x] Regra de alerta para alunos com 3 faltas consecutivas (`EvasaoService`, com testes)
-- [ ] Alerta integrado à tela de Chamada e lista "Quem está faltando"
-- [ ] Controle de empréstimo e devolução de instrumentos
-- [ ] Cadastro de turmas e alunos pelo app
+Login da equipe com Firebase Authentication, com mensagem de erro genérica
+ Tela inicial com a turma do dia e atalhos (protegida por login)
+ Chamada com toque para marcar faltas e contadores de presentes e faltas
+ Gravação da chamada no Firestore, com suporte offline e sem duplicar registros do mesmo dia
+ Regra de alerta para alunos com 3 faltas consecutivas (`EvasaoService`, com testes)
 
 ## Tecnologias
 
