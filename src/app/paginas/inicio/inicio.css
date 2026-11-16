@@ -4,7 +4,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .topo {
@@ -31,25 +31,67 @@
   font-weight: bold;
 }
 
+.secao h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #444;
+}
+
 .turma-nome {
   font-size: 20px;
   font-weight: 500;
   margin: 0 0 4px;
 }
 
+.turma-detalhes {
+  margin: 0;
+}
+
+.turma mat-card-actions {
+  padding: 8px 16px 16px;
+}
+
 .principal {
+  width: 100%;
   min-height: 64px;
   font-size: 20px;
 }
 
-.atalho {
-  min-height: 56px;
-  display: flex;
-  justify-content: space-between;
+.blocos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
 }
 
-.indicador {
-  margin-left: 12px;
+.bloco {
+  height: auto;
+  min-height: 56px;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.bloco-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 2px;
+  white-space: normal;
+}
+
+.bloco-titulo {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.indicador-numero {
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.indicador-rotulo {
   color: #444;
   font-size: 14px;
 }
