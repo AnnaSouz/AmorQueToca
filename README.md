@@ -1,59 +1,71 @@
-# AmorQueToca
+# Amor que Toca
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.7.
+Aplicativo web (PWA) para o **Projeto Amor que Toca**, uma iniciativa social que ensina instrumentos musicais gratuitamente a pessoas carentes no bairro Piracicamirim, em Piracicaba/SP.
 
-## Development server
+O app ajuda os professores voluntários a **fazer a chamada da turma**, mesmo com internet instável, e a **identificar alunos em risco de abandonar as aulas**, a partir de três faltas consecutivas.
 
-To start a local development server, run:
+## Problema que o projeto resolve
+
+Hoje as matrículas, a frequência e o empréstimo de instrumentos não são registrados de forma organizada. Sem esse histórico, a equipe não percebe quando um aluno começa a faltar, e muitos acabam deixando o projeto sem que ninguém tenha notado a tempo.
+
+## Funcionalidades
+
+- [x] Login da equipe com Firebase Authentication, com mensagem de erro genérica
+- [x] Tela inicial com a turma do dia e atalhos (protegida por login)
+- [x] Chamada com toque para marcar faltas e contadores de presentes e faltas
+- [x] Gravação da chamada no Firestore, com suporte offline e sem duplicar registros do mesmo dia
+- [x] Regra de alerta para alunos com 3 faltas consecutivas (`EvasaoService`, com testes)
+- [ ] Alerta integrado à tela de Chamada e lista "Quem está faltando"
+- [ ] Controle de empréstimo e devolução de instrumentos
+- [ ] Cadastro de turmas e alunos pelo app
+
+## Tecnologias
+
+- Angular e Angular Material
+- Firebase (Authentication e Firestore) com AngularFire
+- PWA (Service Worker)
+- Vitest para os testes automatizados
+- GitHub Actions para Integração Contínua
+
+## Arquitetura
+
+O código segue uma separação em camadas: a **tela** só exibe e recebe toques, o **serviço** aplica as regras e o **repositório** é o único que conversa com o banco de dados.
+
+```
+src/app/
+├── modelos/         # Aluno e Presenca
+├── paginas/         # Telas: login, inicio e chamada
+├── repositorios/    # Acesso ao Firestore
+└── servicos/        # Regras: autenticação, guarda de rota, registro de chamada e evasão
+```
+
+Cada presença é identificada por **turma + data + aluno**, então salvar a chamada duas vezes no mesmo dia atualiza o registro em vez de duplicá-lo.
+
+## Como executar
+
+Requisitos: Node.js 24 e npm.
 
 ```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Depois, abra `http://localhost:4200`. O acesso é restrito: as contas da equipe são criadas pelo coordenador no console do Firebase, e não existe tela de cadastro no app.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Testes
 
 ```bash
-ng generate component component-name
+ng test --no-watch
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+A suíte tem 8 testes: 4 unitários da regra de 3 faltas consecutivas e 4 de integração entre o registro de chamada e o alerta de evasão (com o banco simulado em memória).
 
-```bash
-ng generate --help
-```
+## Integração Contínua
 
-## Building
+A cada envio para a `main` ou Pull Request, o GitHub Actions instala as dependências, compila o app (`ng build`) e roda os testes. O fluxo está em `.github/workflows/ci.yml`.
 
-To build the project run:
+## Segurança e privacidade
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- As regras do Firestore liberam acesso apenas a usuários autenticados.
+- Os dados usados no desenvolvimento são **fictícios**: nenhum dado real de alunos ou famílias é usado.
+- Pontos já identificados para melhorar: refinar as regras do banco por coleção e fechar o cadastro aberto de usuários no Firebase Authentication.
