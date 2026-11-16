@@ -2,28 +2,50 @@
   <header class="topo">
     <div class="avatar" aria-hidden="true">{{ professor[0] }}</div>
     <h1>Olá, {{ professor }}</h1>
-    <button mat-button type="button" (click)="sair()">Sair</button>
+    <button mat-button type="button" aria-label="Sair da conta" (click)="sair()">Sair</button>
   </header>
 
-  <mat-card appearance="outlined" class="turma">
-    <mat-card-header>
-      <mat-card-title>Turma de hoje</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p class="turma-nome">{{ turma.nome }}</p>
-      <p>{{ turma.horario }} · {{ turma.alunos }} alunos</p>
-    </mat-card-content>
-  </mat-card>
+  <section class="secao" aria-labelledby="titulo-hoje">
+    <h2 id="titulo-hoje">Hoje</h2>
+    <mat-card appearance="outlined" class="turma">
+      <mat-card-content>
+        <p class="turma-nome">{{ turma.nome }}</p>
+        <p class="turma-detalhes">{{ turma.horario }} · {{ turma.alunos }} alunos</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button type="button" class="principal" (click)="fazerChamada()">Fazer chamada</button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
 
-  <button mat-flat-button type="button" class="principal" (click)="fazerChamada()">Fazer chamada</button>
+  <section class="secao" aria-labelledby="titulo-acompanhamento">
+    <h2 id="titulo-acompanhamento">Acompanhamento</h2>
+    <div class="blocos">
+      <button
+        mat-stroked-button
+        type="button"
+        class="bloco"
+        [attr.aria-label]="'Quem está faltando: ' + alunosEmRisco + ' alunos em risco'"
+      >
+        <span class="bloco-conteudo">
+          <span class="bloco-titulo">Quem está faltando</span>
+          <span class="indicador-numero">{{ alunosEmRisco }}</span>
+          <span class="indicador-rotulo">alunos em risco</span>
+        </span>
+      </button>
 
-  <button mat-stroked-button type="button" class="atalho">
-    Quem está faltando
-    <span class="indicador">{{ alunosEmRisco }} alunos em risco</span>
-  </button>
-
-  <button mat-stroked-button type="button" class="atalho">
-    Instrumentos
-    <span class="indicador">{{ instrumentosEmprestados }} de {{ instrumentosTotal }} emprestado</span>
-  </button>
+      <button
+        mat-stroked-button
+        type="button"
+        class="bloco"
+        [attr.aria-label]="'Instrumentos: ' + instrumentosEmprestados + ' de ' + instrumentosTotal + ' emprestados'"
+      >
+        <span class="bloco-conteudo">
+          <span class="bloco-titulo">Instrumentos</span>
+          <span class="indicador-numero">{{ instrumentosEmprestados }}</span>
+          <span class="indicador-rotulo">de {{ instrumentosTotal }} emprestados</span>
+        </span>
+      </button>
+    </div>
+  </section>
 </main>
