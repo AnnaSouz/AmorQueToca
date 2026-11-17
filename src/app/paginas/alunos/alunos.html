@@ -1,0 +1,79 @@
+<main class="tela">
+  <header class="topo">
+    <button mat-button type="button" aria-label="Voltar para o início" (click)="voltar()">Voltar</button>
+    <div>
+      <h1>Alunos</h1>
+      <p class="subtitulo">{{ turma.nome }} · {{ turma.horario }}</p>
+    </div>
+  </header>
+
+  <section class="secao" aria-labelledby="titulo-adicionar">
+    <h2 id="titulo-adicionar">Adicionar aluno</h2>
+    <form class="adicionar" (ngSubmit)="adicionar()">
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Nome do aluno</mat-label>
+        <input matInput type="text" name="novoNome" [(ngModel)]="novoNome" autocomplete="off" />
+      </mat-form-field>
+      <button mat-flat-button type="submit" class="botao-adicionar">Adicionar</button>
+    </form>
+  </section>
+
+  <div class="avisos">
+    @if (mensagem()) {
+      <p class="mensagem" role="status">{{ mensagem() }}</p>
+    }
+    @if (erro()) {
+      <p class="erro" role="alert">{{ erro() }}</p>
+    }
+  </div>
+
+  <section class="secao" aria-labelledby="titulo-lista">
+    <h2 id="titulo-lista">
+      Lista da chamada <span class="contagem">· {{ alunos().length }} {{ alunos().length === 1 ? 'aluno' : 'alunos' }}</span>
+    </h2>
+
+    @if (alunos().length === 0) {
+      <p class="vazio">Nenhum aluno cadastrado ainda. Adicione o primeiro acima.</p>
+    } @else {
+      <ul class="lista" aria-labelledby="titulo-lista">
+        @for (aluno of alunos(); track aluno.id) {
+          <li class="aluno">
+            @if (editandoId() === aluno.id) {
+              <form class="edicao" (ngSubmit)="salvarEdicao(aluno)">
+                <mat-form-field appearance="outline" class="campo">
+                  <mat-label>Nome de {{ aluno.nome }}</mat-label>
+                  <input matInput type="text" name="nomeEditado" [(ngModel)]="nomeEditado" autocomplete="off" />
+                </mat-form-field>
+                <div class="acoes">
+                  <button mat-flat-button type="submit">Salvar</button>
+                  <button mat-button type="button" (click)="cancelarEdicao()">Cancelar</button>
+                </div>
+              </form>
+            } @else if (removendoId() === aluno.id) {
+              <div class="confirmacao" role="group" [attr.aria-label]="'Confirmar remoção de ' + aluno.nome">
+                <p>
+                  Remover <strong>{{ aluno.nome }}</strong> da lista?
+                  <span class="dica">As presenças já registradas continuam guardadas.</span>
+                </p>
+                <div class="acoes">
+                  <button mat-flat-button type="button" class="perigo" (click)="confirmarRemocao(aluno)">Remover</button>
+                  <button mat-button type="button" (click)="cancelarRemocao()">Cancelar</button>
+                </div>
+              </div>
+            } @else {
+              <span class="nome">{{ aluno.nome }}</span>
+              <div class="acoes">
+                <button mat-button type="button" [attr.aria-label]="'Editar ' + aluno.nome" (click)="editar(aluno)">
+                  Editar
+                </button>
+                <button mat-button type="button" class="perigo-texto" [attr.aria-label]="'Remover ' + aluno.nome" (click)="pedirRemocao(aluno)">
+                  Remover
+                </button>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>

@@ -1,0 +1,136 @@
+.tela {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topo h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.subtitulo {
+  margin: 0;
+  color: #444;
+  font-size: 14px;
+}
+
+.secao h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #444;
+}
+
+.contagem {
+  font-weight: 400;
+}
+
+.adicionar,
+.edicao {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.campo {
+  width: 100%;
+}
+
+.botao-adicionar {
+  min-height: 56px;
+  font-size: 18px;
+}
+
+.avisos:empty {
+  display: none;
+}
+
+.mensagem {
+  margin: 0;
+  color: #1b5e20;
+  font-weight: 500;
+}
+
+.erro {
+  margin: 0;
+  color: #b3261e;
+  font-weight: 500;
+}
+
+.vazio {
+  margin: 0;
+  padding: 16px;
+  border: 2px dashed #bbb;
+  border-radius: 12px;
+  color: #444;
+  text-align: center;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.aluno {
+  min-height: 56px;
+  padding: 8px 8px 8px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+
+.nome {
+  font-size: 18px;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.acoes button {
+  min-height: 48px;
+}
+
+.edicao,
+.confirmacao {
+  width: 100%;
+}
+
+.confirmacao p {
+  margin: 0 0 8px;
+}
+
+.dica {
+  display: block;
+  color: #444;
+  font-size: 14px;
+}
+
+.perigo {
+  background: #b3261e;
+  color: #fff;
+}
+
+.perigo-texto {
+  color: #b3261e;
+}

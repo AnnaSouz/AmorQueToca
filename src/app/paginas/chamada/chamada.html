@@ -5,6 +5,7 @@
       <h1>Chamada</h1>
       <p class="subtitulo">{{ turma.nome }} · {{ turma.horario }}</p>
     </div>
+    <a mat-button routerLink="/alunos" class="link-alunos">Editar alunos</a>
   </header>
 
   <section class="contadores" aria-label="Resumo da chamada" aria-live="polite">
@@ -22,8 +23,15 @@
     <h2 id="titulo-alunos">Alunos</h2>
     <p id="instrucao" class="instrucao">Toque em quem faltou</p>
 
+    @if (alunos().length === 0) {
+      <p class="vazio">
+        Nenhum aluno cadastrado.
+        <a mat-button routerLink="/alunos">Cadastrar alunos</a>
+      </p>
+    }
+
     <ul class="lista" aria-labelledby="titulo-alunos" aria-describedby="instrucao">
-      @for (aluno of alunos; track aluno.id) {
+      @for (aluno of alunos(); track aluno.id) {
         <li>
           <button
             type="button"
@@ -50,7 +58,7 @@
         <p class="erro" role="alert">{{ erro() }}</p>
       }
 
-      <button mat-flat-button type="button" class="salvar" (click)="salvar()">Salvar chamada</button>
+      <button mat-flat-button type="button" class="salvar" [disabled]="alunos().length === 0" (click)="salvar()">Salvar chamada</button>
     </div>
   </div>
 </main>

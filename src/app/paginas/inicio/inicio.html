@@ -10,10 +10,11 @@
     <mat-card appearance="outlined" class="turma">
       <mat-card-content>
         <p class="turma-nome">{{ turma.nome }}</p>
-        <p class="turma-detalhes">{{ turma.horario }} · {{ turma.alunos }} alunos</p>
+        <p class="turma-detalhes">{{ turma.horario }} · {{ alunos().length }} {{ alunos().length === 1 ? 'aluno' : 'alunos' }}</p>
       </mat-card-content>
       <mat-card-actions>
         <button mat-flat-button type="button" class="principal" (click)="fazerChamada()">Fazer chamada</button>
+        <button mat-stroked-button type="button" class="secundario" (click)="gerenciarAlunos()">Alunos da turma</button>
       </mat-card-actions>
     </mat-card>
   </section>
