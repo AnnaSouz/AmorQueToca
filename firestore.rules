@@ -1,8 +1,25 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+
+    // Só quem tem o e-mail na lista entra nos dados do projeto.
+    function autorizado() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && exists(/databases/$(database)/documents/emailsAutorizados/$(request.auth.token.email.lower()));
+    }
+
+    // Lista de e-mails autorizados: cada documento tem como ID o e-mail em minúsculas.
+    // O app só consulta um e-mail por vez (get); ninguém lista nem altera pelo app.
+    // A lista é mantida pelo Console do Firebase.
+    match /emailsAutorizados/{email} {
+      allow get: if true;
+      allow list, write: if false;
+    }
+
+    // Demais coleções (presencas etc.): só usuários autorizados.
+    match /{colecao}/{documento=**} {
+      allow read, write: if colecao != 'emailsAutorizados' && autorizado();
     }
   }
 }

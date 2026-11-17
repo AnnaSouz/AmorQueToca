@@ -1,14 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Autenticacao } from '../../servicos/autenticacao';
+import { Autenticacao, EmailNaoAutorizado } from '../../servicos/autenticacao';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [FormsModule, RouterLink, MatButtonModule, MatFormFieldModule, MatInputModule],
   styleUrl: './login.css',
   templateUrl: './login.html',
 })
@@ -38,8 +38,12 @@ export class Login {
     try {
       await this.autenticacao.entrar(this.email.trim(), this.senha);
       this.roteador.navigate(['/inicio']);
-    } catch {
-      this.erro.set('E-mail ou senha incorretos. Confira ou use Esqueci minha senha.');
+    } catch (e) {
+      this.erro.set(
+        e instanceof EmailNaoAutorizado
+          ? 'Este e-mail não está autorizado. Fale com a coordenação do projeto.'
+          : 'E-mail ou senha incorretos. Confira ou use Esqueci minha senha.',
+      );
     } finally {
       this.carregando.set(false);
     }

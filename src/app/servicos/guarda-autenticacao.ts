@@ -1,11 +1,32 @@
 import { inject } from '@angular/core';
-import { Auth, authState } from '@angular/fire/auth';
 import { CanActivateFn, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { from, of, switchMap } from 'rxjs';
+import { Autenticacao } from './autenticacao';
 
 export const guardaAutenticacao: CanActivateFn = () => {
   const roteador = inject(Router);
-  return authState(inject(Auth)).pipe(
-    map((usuario) => (usuario ? true : roteador.createUrlTree(['/']))),
+  const autenticacao = inject(Autenticacao);
+  const telaLogin = roteador.createUrlTree(['/']);
+
+  return autenticacao.usuarioAtual().pipe(
+    switchMap((usuario) => {
+      if (!usuario?.email) {
+        return of(telaLogin);
+      }
+      return from(
+        autenticacao
+          .emailAutorizado(usuario.email)
+          .then(async (autorizado) => {
+            if (autorizado) {
+              return true;
+            }
+            await autenticacao.sair();
+            return telaLogin;
+          })
+          // Sem internet e sem cache, a consulta falha: deixa abrir o app,
+          // porque as regras do Firestore continuam bloqueando quem não está na lista.
+          .catch(() => true),
+      );
+    }),
   );
 };
