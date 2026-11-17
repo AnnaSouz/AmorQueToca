@@ -1,41 +1,33 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Aluno } from '../../modelos/aluno';
+import { TURMA_ATUAL } from '../../modelos/turma';
+import { RepositorioAlunos } from '../../repositorios/repositorio-alunos';
 import { RegistroChamada } from '../../servicos/registro-chamada';
 
 @Component({
   selector: 'app-chamada',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, RouterLink],
   styleUrl: './chamada.css',
   templateUrl: './chamada.html',
 })
 export class Chamada {
   private roteador = inject(Router);
   private registroChamada = inject(RegistroChamada);
+  private repositorioAlunos = inject(RepositorioAlunos);
 
-  
-  turmaId = 'turma-violao-iniciante';
-  turma = { nome: 'Violão Iniciante', horario: 'Sábado, 9h' };
-  alunos: Aluno[] = [
-    { id: 'a1', nome: 'Ana Ribeiro' },
-    { id: 'a2', nome: 'Bia Ferreira' },
-    { id: 'a3', nome: 'Davi Oliveira' },
-    { id: 'a4', nome: 'Enzo Rocha' },
-    { id: 'a5', nome: 'Gabriel Costa' },
-    { id: 'a6', nome: 'Helena Dias' },
-    { id: 'a7', nome: 'Laura Mendes' },
-    { id: 'a8', nome: 'Lucas Andrade' },
-    { id: 'a9', nome: 'Maria Clara Santos' },
-    { id: 'a10', nome: 'Sofia Ramos' },
-  ];
+  turma = TURMA_ATUAL;
+  alunos = toSignal(this.repositorioAlunos.observarAtivos(this.turma.id), { initialValue: [] as Aluno[] });
 
   faltas = signal<Set<string>>(new Set());
   mensagem = signal('');
   erro = signal('');
 
-  totalFaltas = computed(() => this.faltas().size);
-  totalPresentes = computed(() => this.alunos.length - this.faltas().size);
+  // Só conta faltas de quem ainda está na lista (um aluno pode ser removido durante a chamada).
+  totalFaltas = computed(() => this.alunos().filter((aluno) => this.faltas().has(aluno.id)).length);
+  totalPresentes = computed(() => this.alunos().length - this.totalFaltas());
 
   estaFaltando(id: string) {
     return this.faltas().has(id);
@@ -58,7 +50,7 @@ export class Chamada {
   async salvar() {
     this.mensagem.set('');
     this.erro.set('');
-    const gravacao = this.registroChamada.salvar(this.turmaId, this.alunos, this.faltas());
+    const gravacao = this.registroChamada.salvar(this.turma.id, this.alunos(), this.faltas());
 
     if (navigator.onLine) {
       try {
