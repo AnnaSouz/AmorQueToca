@@ -46,6 +46,9 @@ Requisitos: Node.js 24 e npm.
 npm install
 ng serve
 ```
+Para entrar utilize a conta teste: 
+E-mail: pauo.teste@exemplo.com
+Senha: TestandoAqui
 
 Depois, abra `http://localhost:4200`. O acesso é restrito: as contas da equipe são criadas pelo coordenador no console do Firebase, e não existe tela de cadastro no app.
 
