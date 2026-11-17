@@ -50,7 +50,24 @@ Para entrar utilize a conta teste:
 E-mail: pauo.teste@exemplo.com
 Senha: TestandoAqui
 
-Depois, abra `http://localhost:4200`. O acesso é restrito: as contas da equipe são criadas pelo coordenador no console do Firebase, e não existe tela de cadastro no app.
+Depois, abra `http://localhost:4200`.
+
+## Versão publicada
+
+https://amor-que-toca.web.app
+
+Para publicar uma nova versão:
+
+```bash
+ng build
+firebase deploy --only hosting
+```
+
+## Acesso
+
+O acesso é restrito a uma lista de e-mails autorizados: a coleção `emailsAutorizados` no Firestore, em que o ID de cada documento é o e-mail em minúsculas. A lista é mantida pelo coordenador no Console do Firebase.
+
+Quem está na lista pode criar a própria conta na tela **Criar conta** (`/cadastro`). E-mails fora da lista não conseguem se cadastrar, entrar nem acessar os dados (regras em `firestore.rules`, publicadas com `firebase deploy --only firestore:rules`).
 
 ## Testes
 
