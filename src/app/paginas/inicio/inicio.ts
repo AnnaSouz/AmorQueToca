@@ -14,7 +14,7 @@ export class Inicio {
   private autenticacao = inject(Autenticacao);
   private roteador = inject(Router);
 
-  professor = 'Paulo';
+  professor = this.autenticacao.nomeUsuario();
   turma = { nome: 'Violão Iniciante', horario: 'Sábado, 9h', alunos: 10 };
   alunosEmRisco = 2;
   instrumentosEmprestados = 1;

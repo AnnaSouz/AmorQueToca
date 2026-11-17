@@ -1,0 +1,56 @@
+<main class="tela">
+  <h1>Criar conta</h1>
+  <p class="subtitulo">Amor que Toca · chamada e instrumentos da turma</p>
+
+  <form (ngSubmit)="cadastrar()">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" name="nome" [(ngModel)]="nome" autocomplete="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input matInput type="email" name="email" [(ngModel)]="email" autocomplete="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input
+        matInput
+        [type]="mostrarSenha() ? 'text' : 'password'"
+        name="senha"
+        [(ngModel)]="senha"
+        autocomplete="new-password"
+        aria-describedby="dica-senha"
+      />
+      <button matSuffix mat-button type="button" (click)="alternarSenha()">
+        {{ mostrarSenha() ? 'Ocultar' : 'Mostrar' }}
+      </button>
+      <mat-hint id="dica-senha">Pelo menos 6 caracteres</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Confirmar senha</mat-label>
+      <input
+        matInput
+        [type]="mostrarSenha() ? 'text' : 'password'"
+        name="confirmacao"
+        [(ngModel)]="confirmacao"
+        autocomplete="new-password"
+      />
+    </mat-form-field>
+
+    @if (erro()) {
+      <p class="erro" role="alert">{{ erro() }}</p>
+    }
+
+    <button mat-flat-button type="submit" class="criar" [disabled]="carregando()">
+      {{ carregando() ? 'Criando...' : 'Criar conta' }}
+    </button>
+  </form>
+
+  <p class="ja-tem-conta">
+    Já tem conta?
+    <a mat-button routerLink="/">Entrar</a>
+  </p>
+</main>
